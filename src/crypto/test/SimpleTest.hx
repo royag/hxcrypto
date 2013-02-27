@@ -26,6 +26,11 @@ class SimpleTest
 		trace("FAIL: " + s);
 		throw "TEST FAILED:" + s;
 	}
+	function fail3(s:String, e:Dynamic, s2) {
+		s = s + Std.string(e)+ ","+s2;
+		trace("FAIL: " + s);
+		throw "TEST FAILED:" + s;
+	}
 	
 	function success() {
 		trace("Success!");

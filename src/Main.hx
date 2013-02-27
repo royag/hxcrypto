@@ -19,6 +19,17 @@ import crypto.engines.RSACoreEngine;
 import crypto.engines.RSAEngine;
 import crypto.test.RSATest;
 
+import crypto.Digest;
+import crypto.ExtendedDigest;
+import crypto.digests.GeneralDigestImpl;
+import crypto.digests.IGeneralDigest;
+import crypto.util.Pack;
+import crypto.digests.SHA1Digest;
+import crypto.test.DigestTest;
+import crypto.test.SHA1DigestTest;
+import crypto.digests.SHA256Digest;
+import crypto.test.SHA256DigestTest;
+
 /**
  * ...
  * @author test
@@ -48,17 +59,31 @@ class Main
 		rsaTest.rawTest();
 	}
 	
+	static function testSHA1() {
+		var t = new SHA1DigestTest();
+		t.performTest();
+	}
+
+	static function testSHA256() {
+		var t = new SHA256DigestTest();
+		t.performTest();
+	}
+	
+	
 	static function main() {
 		//testAES();
 		//testBigInteger();
 		testRSA();
+		//testSHA1();
+		//testSHA256();
 	}
 	
 	static function sometest() {
 		//BigInteger.initSTATIC();
 		//var t = new RSATest();
 		//t.rawTest();
-		test2();
+		//test2();
+		
 		
 		/*
         var magIn = [-9472224,1769152628,1751457908,1768776992,1718579744,1634495520,1735356260,544040302];
