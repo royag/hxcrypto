@@ -26,15 +26,15 @@ class BigInteger
 		return a1 + b1 | 0;
 	}
 	
-	public static var Character_MAX_RADIX = 36;
-	public static var Character_MIN_RADIX = 2;
+	public static inline var Character_MAX_RADIX = 36;
+	public static inline var Character_MIN_RADIX = 2;
 	
 	//static var LongMIN_VALUE = Int64.ofInt(-9223372036854775808); // (-2)**63   // TODO : FIX  // signed:  0x80000000 00000000
 	public static var LongMIN_VALUE = Int64.make(0x80000000, 0x00000000);
 	public static var LongMAX_VALUE = Int64.make(0x7FFFFFFF, 0xFFFFFFFF);
 	
-	public static var IntegerMIN_VALUE:Int = -2147483648;
-	public static var IntegerMAX_VALUE:Int = 2147483647; // Java: Integer.MAX_VALUE
+	public static inline var IntegerMIN_VALUE:Int = -2147483648;
+	public static inline var IntegerMAX_VALUE:Int = 2147483647; // Java: Integer.MAX_VALUE
 	
 	static function Arrays_clone(a:Array<Int>) {
 		var ret = new Array<Int>();
