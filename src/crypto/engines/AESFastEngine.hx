@@ -560,7 +560,8 @@ class AESFastEngine implements BlockCipher
 	 
 	static function shift(r:Integer, shift:Integer) : Integer
     {
-        return (r >>> shift) | (r << -shift);
+        //return (r >>> shift) | (r << -shift);
+        return (r >>> shift) | (r << 32 - shift); // (r << -shift);  (negative right hand operator is undefined in C/C++)
     }
 	
 	/* multiply four bytes in GF(2^8) by 'x' {02} in parallel */
@@ -777,6 +778,10 @@ class AESFastEngine implements BlockCipher
         C3 |= (bytes.get(index++) & 0xff) << 16;
         C3 |= bytes.get(index++) << 24;
     }	
+
+	static inline function byte(i:Int) {
+		return i & 0xFF;
+	}
 	
 	function packBlock(
         bytes:Bytes,
@@ -784,25 +789,25 @@ class AESFastEngine implements BlockCipher
     {
         var     index = off;
 
-        bytes.set(index++, C0);
-        bytes.set(index++, (C0 >> 8));
-        bytes.set(index++, (C0 >> 16));
-        bytes.set(index++, (C0 >> 24));
+        bytes.set(index++, byte(C0));
+        bytes.set(index++, byte((C0 >> 8)));
+        bytes.set(index++, byte((C0 >> 16)));
+        bytes.set(index++, byte((C0 >> 24)));
 
-        bytes.set(index++, C1);
-        bytes.set(index++, (C1 >> 8));
-        bytes.set(index++, (C1 >> 16));
-        bytes.set(index++, (C1 >> 24));
+        bytes.set(index++, byte(C1));   // Might fail on Neko unless set-func is modified to: untyped __dollar__sset(b,pos,v & 0xFF);
+        bytes.set(index++, byte((C1 >> 8)));
+        bytes.set(index++, byte((C1 >> 16)));
+        bytes.set(index++, byte((C1 >> 24)));
 
-        bytes.set(index++, C2);
-        bytes.set(index++, (C2 >> 8));
-        bytes.set(index++, (C2 >> 16));
-        bytes.set(index++, (C2 >> 24));
+        bytes.set(index++, byte(C2));
+        bytes.set(index++, byte((C2 >> 8)));
+        bytes.set(index++, byte((C2 >> 16)));
+        bytes.set(index++, byte((C2 >> 24)));
 
-        bytes.set(index++, C3);
-        bytes.set(index++, (C3 >> 8));
-        bytes.set(index++, (C3 >> 16));
-        bytes.set(index++, (C3 >> 24));
+        bytes.set(index++, byte(C3));
+        bytes.set(index++, byte((C3 >> 8)));
+        bytes.set(index++, byte((C3 >> 16)));
+        bytes.set(index++, byte((C3 >> 24)));
     }
 	
 
