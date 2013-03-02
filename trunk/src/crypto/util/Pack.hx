@@ -24,12 +24,16 @@ class Pack
         }
     }
 
+	static inline function byte(i:Int) {
+		return i & 0xFF;
+	}		
+	
     public static function intToBigEndian(n:Int, bs:Bytes,  off:Int):Void
     {
-        bs.set(  off,n >>> 24);
-        bs.set(++off,n >>> 16);
-        bs.set(++off,n >>>  8);
-        bs.set(++off,n       );
+        bs.set(  off,byte(n >>> 24));
+        bs.set(++off,byte(n >>> 16));
+        bs.set(++off,byte(n >>>  8));
+        bs.set(++off,byte(n       ));
     }
 
     public static function intArrayToBigEndian(ns:Array<Int>, bs:Bytes,  off:Int):Void
@@ -81,10 +85,10 @@ class Pack
 
     public static function intToLittleEndian(n:Int, bs:Bytes,  off:Int):Void
     {
-        bs.set(  off,(n       ));
-        bs.set(++off,(n >>>  8));
-        bs.set(++off,(n >>> 16));
-        bs.set(++off,(n >>> 24));
+        bs.set(  off,byte((n       )));
+        bs.set(++off,byte((n >>>  8)));
+        bs.set(++off,byte((n >>> 16)));
+        bs.set(++off,byte((n >>> 24)));
     }
 
 	public static function intArrayToLittleEndian(ns:Array<Int>, bs:Bytes ,  off:Int):Void

@@ -221,7 +221,9 @@ class BufferedBlockCipher
 
         if (len > gapLen)
         {
-			buf.blit(outOff, inBytes, inOff, gapLen);
+			//buf.blit(outOff, inBytes, inOff, gapLen);
+			//buf.blit(bufOff, inBytes, inOff, gapLen);
+			buf.blit(bufOff, inBytes, inOff, gapLen);
             //System.arraycopy(inBytes, inOff, buf, bufOff, gapLen);
 
             resultLen += cipher.processBlock(buf, 0, out, outOff);
@@ -240,7 +242,6 @@ class BufferedBlockCipher
         }
 
 		buf.blit(bufOff, inBytes, inOff, len);
-		//trace(Hex.encode(buf));
         //System.arraycopy(inBytes, inOff, buf, bufOff, len);
 
         bufOff += len;
@@ -253,6 +254,7 @@ class BufferedBlockCipher
 
         return resultLen;
     }
+	
 	
 /**
      * Process the last block in the buffer.

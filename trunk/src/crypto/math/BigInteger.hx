@@ -19,6 +19,10 @@ import crypto.Hex;
 class BigInteger 
 {
 	
+	static inline function byte(i:Int) {
+		return i & 0xFF;
+	}	
+	
 	static inline function mul32(a, b) {
 		// Have to do some bit-magic to make JavaScript NOT destroy the 32 bit signed integers:
 		var a1 = a * (b & 0xFFFF) | 0;
@@ -632,7 +636,7 @@ var offset = 0;
 					while (index < numBytes)
 					{
 						//inverse[index++] = (byte)~bytes[iBval++];
-						inverse.set(index++,~bval.get(iBval++));
+						inverse.set(index++,byte(~bval.get(iBval++)));
 					}
 
 					//Debug.Assert(iBval == end);
@@ -965,7 +969,7 @@ var offset = 0;
 
         // strip off any excess bits in the MSB
          var xBits:Int= mul32(BITS_PER_BYTE , nBytes) - numBits;
-        b.get(0) &= /*(byte)*/(255 >>> xBits);
+        b.set(0, b.get(0) & /*(byte)*/byte((255 >>> xBits)));
 
         this.magnitude = makeMagnitude(b, 1);
         this.sign = this.magnitude.length < 1 ? 0 : 1;
@@ -1005,7 +1009,7 @@ var offset = 0;
 
                     r = (i == 0 ? rnd.nextInt() : r >> BITS_PER_BYTE);
                     //bytes[numGot++] = r;// (byte) r;
-					bytes.set(numGot++, r);
+					bytes.set(numGot++, byte(r));
                 }
             }
         /*}*/
@@ -1037,6 +1041,7 @@ var offset = 0;
          var nBytes:Int= Math.floor((bitLength + 7) / BITS_PER_BYTE);
          var xBits:Int= mul32(BITS_PER_BYTE , nBytes) - bitLength;
         //var mask:Byte = (255 >>> xBits); // TODO : NB : Byte vs Int overflow ?
+		// NB/TODO: too high bitNumber: gives warning of undefined behaviour in C++ :
         var mask:Byte = (255 >>> xBits) << 56 >>> 56; // TODO : NB : Byte vs Int overflow ?
 
         var b : Bytes = Bytes.alloc(nBytes); // byte[] b = new byte[nBytes];
@@ -1047,13 +1052,13 @@ var offset = 0;
             nextRndBytes(rnd, b);
 
             // strip off any excess bits in the MSB
-            b.get(0) &= mask;
+            b.set(0,b.get(0) & mask);
 
             // ensure the leading bit is 1 (to meet the strength requirement)
-            b.get(0) |= /*(byte)*/(1 << (7 - xBits));
+            b.set(0, b.get(0) | /*(byte)*/byte((1 << (7 - xBits))));
 
             // ensure the trailing bit is 1 (i.e. must be odd)
-            b.get(nBytes - 1) |= /*/*(byte)*/1;
+            b.set(nBytes - 1, b.get(nBytes-1) | /*/*(byte)*/1);
 
             this.magnitude = makeMagnitude(b, 1);
             this.nBits = -1;
@@ -3724,7 +3729,7 @@ var offset = 0;
                     bytesCopied++;
                 }
 
-                bytes.set(i, mag); // [i] = mag; // (byte) mag;
+                bytes.set(i, byte(mag)); // [i] = mag; // (byte) mag;
 				
 				i--; // HAXE
             }
@@ -4128,7 +4133,7 @@ var offset = 0;
 		for (i in 0...8)
         {
             //b.set(7 - i) = /*(byte)*/val;
-			b.set(7 - i, Int64.toInt(val));
+			b.set(7 - i, byte(Int64.toInt(val)));
             //val >>= 8;
 			val = Int64.shr(val, 8);
         }
