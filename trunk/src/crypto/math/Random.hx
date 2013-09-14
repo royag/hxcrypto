@@ -17,20 +17,27 @@ class Random
 		
 	}
 	
-	public function nextBytes(b:Bytes) {
+	/*public function nextBytes(b:Bytes) {
+		trace("nextBytes");
 		for (i in 0...b.length) {
 			b.set(i, nextUpTo(255));
 		}
 	}
 	
 	private function nextUpTo(max:Int) {
+		trace("nextUpTo");
 		var r:Float = Math.random();
 		var s:Float = Math.random();
 		var i = max * r;
 		return Math.floor(i);
-	}
+	}*/
+	
 	
 	public function nextInt() : Int {
+		#if js
+		untyped __js__("if (window.crypto.getRandomValues) { var tmp = new Int32Array(1); window.crypto.getRandomValues(tmp); return tmp[0]; }");
+		#end
+		//trace("nextInt");
 		var r:Float = Math.random();
 		var s:Float = Math.random();
 		var i = IntegerMAX_VALUE * r;
