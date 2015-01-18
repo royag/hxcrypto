@@ -1,0 +1,11 @@
+{
+	"name": "hxcrypto",
+	"url": "https://code.google.com/p/hxcrypto/",
+	"license": "MIT",
+	"tags": [],
+	"description": "Cryptographic routines for Haxe",
+	"version": "0.0.1",
+	"releasenote": "Initial",
+	"contributors": [ "roy" ],
+	"dependencies": {}
+}
