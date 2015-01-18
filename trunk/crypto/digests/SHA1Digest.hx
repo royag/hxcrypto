@@ -186,20 +186,20 @@ class SHA1Digest extends GeneralDigestImpl implements IGeneralDigest
         {
             // E = rotateLeft(A, 5) + f(B, C, D) + E + X[idx++] + Y1
             // B = rotateLeft(B, 30)
-            E += (A << 5 | A >>> 27) + f(B, C, D) + X[idx++] + Y1;
-            B = B << 30 | B >>> 2;
+            E = 0xFFFFFFFF & (E + (A << 5 | A >>> 27) + f(B, C, D) + X[idx++] + Y1);
+            B = 0xFFFFFFFF & (B << 30 | B >>> 2);
         
-            D += (E << 5 | E >>> 27) + f(A, B, C) + X[idx++] + Y1;
-            A = A << 30 | A >>> 2;
+            D = 0xFFFFFFFF & (D + (E << 5 | E >>> 27) + f(A, B, C) + X[idx++] + Y1);
+            A = 0xFFFFFFFF & (A << 30 | A >>> 2);
        
-            C += (D << 5 | D >>> 27) + f(E, A, B) + X[idx++] + Y1;
-            E = E << 30 | E >>> 2;
+            C = 0xFFFFFFFF & (C + (D << 5 | D >>> 27) + f(E, A, B) + X[idx++] + Y1);
+            E = 0xFFFFFFFF & (E << 30 | E >>> 2);
        
-            B += (C << 5 | C >>> 27) + f(D, E, A) + X[idx++] + Y1;
-            D = D << 30 | D >>> 2;
+            B = 0xFFFFFFFF & (B + (C << 5 | C >>> 27) + f(D, E, A) + X[idx++] + Y1);
+            D = 0xFFFFFFFF & (D << 30 | D >>> 2);
 
-            A += (B << 5 | B >>> 27) + f(C, D, E) + X[idx++] + Y1;
-            C = C << 30 | C >>> 2;
+            A = 0xFFFFFFFF & (A + (B << 5 | B >>> 27) + f(C, D, E) + X[idx++] + Y1);
+            C = 0xFFFFFFFF & (C << 30 | C >>> 2);
         }
         
         //
@@ -210,20 +210,20 @@ class SHA1Digest extends GeneralDigestImpl implements IGeneralDigest
         {
             // E = rotateLeft(A, 5) + h(B, C, D) + E + X[idx++] + Y2
             // B = rotateLeft(B, 30)
-            E += (A << 5 | A >>> 27) + h(B, C, D) + X[idx++] + Y2;
-            B = B << 30 | B >>> 2;   
+            E = 0xFFFFFFFF & (E + (A << 5 | A >>> 27) + h(B, C, D) + X[idx++] + Y2);
+            B = 0xFFFFFFFF & (B << 30 | B >>> 2);   
             
-            D += (E << 5 | E >>> 27) + h(A, B, C) + X[idx++] + Y2;
-            A = A << 30 | A >>> 2;
+            D = 0xFFFFFFFF & (D + (E << 5 | E >>> 27) + h(A, B, C) + X[idx++] + Y2);
+            A = 0xFFFFFFFF & (A << 30 | A >>> 2);
             
-            C += (D << 5 | D >>> 27) + h(E, A, B) + X[idx++] + Y2;
-            E = E << 30 | E >>> 2;
+            C = 0xFFFFFFFF & (C + (D << 5 | D >>> 27) + h(E, A, B) + X[idx++] + Y2);
+            E = 0xFFFFFFFF & (E << 30 | E >>> 2);
             
-            B += (C << 5 | C >>> 27) + h(D, E, A) + X[idx++] + Y2;
-            D = D << 30 | D >>> 2;
+            B = 0xFFFFFFFF & (B + (C << 5 | C >>> 27) + h(D, E, A) + X[idx++] + Y2);
+            D = 0xFFFFFFFF & (D << 30 | D >>> 2);
 
-            A += (B << 5 | B >>> 27) + h(C, D, E) + X[idx++] + Y2;
-            C = C << 30 | C >>> 2;
+            A = 0xFFFFFFFF & (A + (B << 5 | B >>> 27) + h(C, D, E) + X[idx++] + Y2);
+            C = 0xFFFFFFFF & (C << 30 | C >>> 2);
         }
         
         //
@@ -234,20 +234,20 @@ class SHA1Digest extends GeneralDigestImpl implements IGeneralDigest
         {
             // E = rotateLeft(A, 5) + g(B, C, D) + E + X[idx++] + Y3
             // B = rotateLeft(B, 30)
-            E += (A << 5 | A >>> 27) + g(B, C, D) + X[idx++] + Y3;
-            B = B << 30 | B >>> 2;
+            E = 0xFFFFFFFF & (E + (A << 5 | A >>> 27) + g(B, C, D) + X[idx++] + Y3);
+            B = 0xFFFFFFFF & (B << 30 | B >>> 2);
             
-            D += (E << 5 | E >>> 27) + g(A, B, C) + X[idx++] + Y3;
-            A = A << 30 | A >>> 2;
+            D = 0xFFFFFFFF & (D + (E << 5 | E >>> 27) + g(A, B, C) + X[idx++] + Y3);
+            A = 0xFFFFFFFF & (A << 30 | A >>> 2);
             
-            C += (D << 5 | D >>> 27) + g(E, A, B) + X[idx++] + Y3;
-            E = E << 30 | E >>> 2;
+            C = 0xFFFFFFFF & (C + (D << 5 | D >>> 27) + g(E, A, B) + X[idx++] + Y3);
+            E = 0xFFFFFFFF & (E << 30 | E >>> 2);
             
-            B += (C << 5 | C >>> 27) + g(D, E, A) + X[idx++] + Y3;
-            D = D << 30 | D >>> 2;
+            B = 0xFFFFFFFF & (B + (C << 5 | C >>> 27) + g(D, E, A) + X[idx++] + Y3);
+            D = 0xFFFFFFFF & (D << 30 | D >>> 2);
 
-            A += (B << 5 | B >>> 27) + g(C, D, E) + X[idx++] + Y3;
-            C = C << 30 | C >>> 2;
+            A = 0xFFFFFFFF & (A + (B << 5 | B >>> 27) + g(C, D, E) + X[idx++] + Y3);
+            C = 0xFFFFFFFF & (C << 30 | C >>> 2);
         }
 
         //
@@ -258,28 +258,28 @@ class SHA1Digest extends GeneralDigestImpl implements IGeneralDigest
         {
             // E = rotateLeft(A, 5) + h(B, C, D) + E + X[idx++] + Y4
             // B = rotateLeft(B, 30)
-            E += (A << 5 | A >>> 27) + h(B, C, D) + X[idx++] + Y4;
-            B = B << 30 | B >>> 2;
+            E = 0xFFFFFFFF & (E + (A << 5 | A >>> 27) + h(B, C, D) + X[idx++] + Y4);
+            B = 0xFFFFFFFF & (B << 30 | B >>> 2);
             
-            D += (E << 5 | E >>> 27) + h(A, B, C) + X[idx++] + Y4;
-            A = A << 30 | A >>> 2;
+            D = 0xFFFFFFFF & (D + (E << 5 | E >>> 27) + h(A, B, C) + X[idx++] + Y4);
+            A = 0xFFFFFFFF & (A << 30 | A >>> 2);
             
-            C += (D << 5 | D >>> 27) + h(E, A, B) + X[idx++] + Y4;
-            E = E << 30 | E >>> 2;
+            C = 0xFFFFFFFF & (C + (D << 5 | D >>> 27) + h(E, A, B) + X[idx++] + Y4);
+            E = 0xFFFFFFFF & (E << 30 | E >>> 2);
             
-            B += (C << 5 | C >>> 27) + h(D, E, A) + X[idx++] + Y4;
-            D = D << 30 | D >>> 2;
+            B = 0xFFFFFFFF & (B + (C << 5 | C >>> 27) + h(D, E, A) + X[idx++] + Y4);
+            D = 0xFFFFFFFF & (D << 30 | D >>> 2);
 
-            A += (B << 5 | B >>> 27) + h(C, D, E) + X[idx++] + Y4;
-            C = C << 30 | C >>> 2;
+            A = 0xFFFFFFFF & (A + (B << 5 | B >>> 27) + h(C, D, E) + X[idx++] + Y4);
+            C = 0xFFFFFFFF & (C << 30 | C >>> 2);
         }
 
 
-        H1 += A;
-        H2 += B;
-        H3 += C;
-        H4 += D;
-        H5 += E;
+        H1 += 0xFFFFFFFF & (A);
+        H2 += 0xFFFFFFFF & (B);
+        H3 += 0xFFFFFFFF & (C);
+        H4 += 0xFFFFFFFF & (D);
+        H5 += 0xFFFFFFFF & (E);
 
         //
         // reset start of the buffer.
