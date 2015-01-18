@@ -1,4 +1,4 @@
-package ;
+package crypto.test ;
 
 import crypto.Array2;
 import crypto.engines.AESFastEngine;
@@ -8,6 +8,7 @@ import crypto.test.AESFastTest;
 import crypto.test.BigIntegerTest;
 import crypto.test.BlockCipherMonteCarloTest;
 import haxe.crypto.BaseCode;
+import haxe.Log;
 //import haxe.BaseCode;
 import haxe.io.Bytes;
 //import haxe.Int64;
@@ -29,6 +30,9 @@ import crypto.test.DigestTest;
 import crypto.test.SHA1DigestTest;
 import crypto.digests.SHA256Digest;
 import crypto.test.SHA256DigestTest;
+#if js
+import js.Browser;
+#end
 
 /**
  * ...
@@ -37,6 +41,35 @@ import crypto.test.SHA256DigestTest;
 
 class Main 
 {
+	
+	public static function runTests() {
+		testSHA1();
+		testSHA256();
+		testAES();
+		testBigInteger();
+		testRSA();
+		//test1();
+	}
+	
+	public static function main() {
+		#if js
+		Log.trace = myTrace;
+		Browser.window.setTimeout(function() {
+			runTests();
+		}, 500);
+		#else
+		runTests();
+		#end
+		
+		//trace("Test");
+	}
+	
+	#if js
+	static function myTrace( v : Dynamic, ?inf : haxe.PosInfos ) {
+		var hxTrace = Browser.document.getElementById("haxe:trace");
+		hxTrace.innerHTML = hxTrace.innerHTML + "<br/>" + Std.string(v);
+	}
+	#end
 	
 	static function testAES() {
 		trace("-------- AES test --------");
@@ -70,15 +103,19 @@ class Main
 	}
 	
 	
-	static function main() {
+	/*public static function main() {
+		trace("HEISANN");
+		trace("DFSDFSDFSDFSDFSD");
+		throw "UGH";
 		//testAES();
 		//testBigInteger();
-		testRSA();
+		//testRSA();
 		//testSHA1();
 		//testSHA256();
-	}
+	}*/
 	
-	static function sometest() {
+	//static function sometest() {
+	//	trace("MHM");
 		//BigInteger.initSTATIC();
 		//var t = new RSATest();
 		//t.rawTest();
@@ -134,7 +171,7 @@ class Main
 			trace(b.get(i) & 0xFF);
 		}*/
 		//trace("HEY");
-	}
+	//}
 	
 	static function test2() {
 		//var a = Int
