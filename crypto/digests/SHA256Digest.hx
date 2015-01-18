@@ -165,7 +165,7 @@ class SHA256Digest extends GeneralDigestImpl implements IGeneralDigest
         //for (int t = 16; t <= 63; t++)
 		for (t in 16...64)
         {
-            X[t] = Theta1(X[t - 2]) + X[t - 7] + Theta0(X[t - 15]) + X[t - 16];
+            X[t] = 0xFFFFFFFF & (Theta1(X[t - 2]) + X[t - 7] + Theta0(X[t - 15]) + X[t - 16]);
         }
 
         //
@@ -185,45 +185,45 @@ class SHA256Digest extends GeneralDigestImpl implements IGeneralDigest
 		for (i in 0...8)
         {
             // t = 8 * i
-            h += Sum1(e) + Ch(e, f, g) + K[t] + X[t] | 0;
-            d += h | 0;
-            h += Sum0(a) + Maj(a, b, c) | 0;
+            h = 0xFFFFFFFF & (h + Sum1(e) + Ch(e, f, g) + K[t] + X[t] | 0);
+            d = 0xFFFFFFFF & (d + h | 0);
+            h = 0xFFFFFFFF & (h + Sum0(a) + Maj(a, b, c) | 0);
             ++t;
 
             // t = 8 * i + 1
-            g += Sum1(d) + Ch(d, e, f) + K[t] + X[t] | 0;
-            c += g | 0;
-            g += Sum0(h) + Maj(h, a, b) | 0;
+            g = 0xFFFFFFFF & (g + Sum1(d) + Ch(d, e, f) + K[t] + X[t] | 0);
+            c = 0xFFFFFFFF & (c + g | 0);
+            g = 0xFFFFFFFF & (g + Sum0(h) + Maj(h, a, b) | 0);
             ++t;
 
             // t = 8 * i + 2
-            f += Sum1(c) + Ch(c, d, e) + K[t] + X[t] | 0;
-            b += f | 0;
-            f += Sum0(g) + Maj(g, h, a) | 0;
+            f = 0xFFFFFFFF & (f + Sum1(c) + Ch(c, d, e) + K[t] + X[t] | 0);
+            b = 0xFFFFFFFF & (b + f | 0);
+            f = 0xFFFFFFFF & (f + Sum0(g) + Maj(g, h, a) | 0);
             ++t;
 
             // t = 8 * i + 3
-            e += Sum1(b) + Ch(b, c, d) + K[t] + X[t] | 0;
-            a += e | 0;
-            e += Sum0(f) + Maj(f, g, h) | 0;
+            e = 0xFFFFFFFF & (e + Sum1(b) + Ch(b, c, d) + K[t] + X[t] | 0);
+            a = 0xFFFFFFFF & (a + e | 0);
+            e = 0xFFFFFFFF & (e + Sum0(f) + Maj(f, g, h) | 0);
             ++t;
 
             // t = 8 * i + 4
-            d += Sum1(a) + Ch(a, b, c) + K[t] + X[t] | 0;
-            h += d | 0;
-            d += Sum0(e) + Maj(e, f, g) | 0;
+            d = 0xFFFFFFFF & (d + Sum1(a) + Ch(a, b, c) + K[t] + X[t] | 0);
+            h = 0xFFFFFFFF & (h + d | 0);
+            d = 0xFFFFFFFF & (d + Sum0(e) + Maj(e, f, g) | 0);
             ++t;
 
             // t = 8 * i + 5
-            c += Sum1(h) + Ch(h, a, b) + K[t] + X[t] | 0;
-            g += c | 0;
-            c += Sum0(d) + Maj(d, e, f) | 0;
+            c = 0xFFFFFFFF & (c + Sum1(h) + Ch(h, a, b) + K[t] + X[t] | 0);
+            g = 0xFFFFFFFF & (g + c | 0);
+            c = 0xFFFFFFFF & (c + Sum0(d) + Maj(d, e, f) | 0);
             ++t;
 
             // t = 8 * i + 6
-            b += Sum1(g) + Ch(g, h, a) + K[t] + X[t] | 0;
-            f += b | 0;
-            b += Sum0(c) + Maj(c, d, e) | 0;
+            b = 0xFFFFFFFF & (b + Sum1(g) + Ch(g, h, a) + K[t] + X[t] | 0);
+            f = 0xFFFFFFFF & (f + b | 0);
+            b = 0xFFFFFFFF & (b + Sum0(c) + Maj(c, d, e) | 0);
             ++t;
 
             // t = 8 * i + 7
@@ -234,10 +234,10 @@ class SHA256Digest extends GeneralDigestImpl implements IGeneralDigest
 				trace("X=" + X[t]);
 				trace(X);
 			}*/
-            a += Sum1(f) + Ch(f, g, h) + K[t] + X[t] | 0;
+            a = 0xFFFFFFFF & (a + Sum1(f) + Ch(f, g, h) + K[t] + X[t] | 0);
 			//if (i == 7) { trace(a);  trace(e); }
-            e += a | 0;
-            a += Sum0(b) + Maj(b, c, d) | 0;
+            e = 0xFFFFFFFF & (e + a | 0);
+            a = 0xFFFFFFFF & (a + Sum0(b) + Maj(b, c, d) | 0);
             ++t;
 
 			//trace("i=" + i + " -- a="+a); 
@@ -245,17 +245,17 @@ class SHA256Digest extends GeneralDigestImpl implements IGeneralDigest
 		}
 		//throw "pause1";
 
-        H1 += a | 0;
+        H1 = 0xFFFFFFFF & (H1 + a | 0);
 		//trace(H1);
 		//trace(a);
 		//throw "pause";
-        H2 += b | 0;
-        H3 += c | 0;
-        H4 += d | 0;
-        H5 += e | 0;
-        H6 += f | 0;
-        H7 += g | 0;
-        H8 += h | 0;
+        H2 = 0xFFFFFFFF & (H2 + b | 0);
+        H3 = 0xFFFFFFFF & (H3 + c | 0);
+        H4 = 0xFFFFFFFF & (H4 + d | 0);
+        H5 = 0xFFFFFFFF & (H5 + e | 0);
+        H6 = 0xFFFFFFFF & (H6 + f | 0);
+        H7 = 0xFFFFFFFF & (H7 + g | 0);
+        H8 = 0xFFFFFFFF & (H8 + h | 0);
 
         //
         // reset the offset and clean out the word buffer.
@@ -274,7 +274,7 @@ class SHA256Digest extends GeneralDigestImpl implements IGeneralDigest
             y:Int,
             z:Int)
     {
-        return (x & y) ^ ((~x) & z);
+        return 0xFFFFFFFF & ((x & y) ^ ((~x) & z));
     }
 
     private function Maj(
@@ -282,31 +282,31 @@ class SHA256Digest extends GeneralDigestImpl implements IGeneralDigest
             y:Int,
             z:Int)
     {
-        return (x & y) ^ (x & z) ^ (y & z);
+        return 0xFFFFFFFF & ((x & y) ^ (x & z) ^ (y & z));
     }
 
     private function Sum0(
             x:Int)
     {
-        return ((x >>> 2) | (x << 30)) ^ ((x >>> 13) | (x << 19)) ^ ((x >>> 22) | (x << 10));
+        return 0xFFFFFFFF &( ((x >>> 2) | (x << 30)) ^ ((x >>> 13) | (x << 19)) ^ ((x >>> 22) | (x << 10)));
     }
 
     private function Sum1(
             x:Int)
     {
-        return ((x >>> 6) | (x << 26)) ^ ((x >>> 11) | (x << 21)) ^ ((x >>> 25) | (x << 7));
+        return 0xFFFFFFFF & (((x >>> 6) | (x << 26)) ^ ((x >>> 11) | (x << 21)) ^ ((x >>> 25) | (x << 7)));
     }
 
     private function Theta0(
             x:Int)
     {
-        return ((x >>> 7) | (x << 25)) ^ ((x >>> 18) | (x << 14)) ^ (x >>> 3);
+        return 0xFFFFFFFF & (((x >>> 7) | (x << 25)) ^ ((x >>> 18) | (x << 14)) ^ (x >>> 3));
     }
 
     private function Theta1(
             x:Int)
     {
-        return ((x >>> 17) | (x << 15)) ^ ((x >>> 19) | (x << 13)) ^ (x >>> 10);
+        return 0xFFFFFFFF & (((x >>> 17) | (x << 15)) ^ ((x >>> 19) | (x << 13)) ^ (x >>> 10));
     }
 
     /* SHA-256 Constants
